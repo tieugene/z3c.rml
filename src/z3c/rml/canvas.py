@@ -16,7 +16,7 @@
 import reportlab.pdfgen.canvas
 import zope.interface
 
-from z3c.rml import attr, chart, directive, flowable, form, interfaces
+from z3c.rml import attr, box, chart, directive, flowable, form, interfaces
 from z3c.rml import occurence, page, special, stylesheet
 
 
@@ -303,7 +303,7 @@ class IImage(interfaces.IRMLDirectiveSignature):
 
     file = attr.Image(
         title='File',
-        description=('Reference to the external file of the iamge.'),
+        description=('Reference to the external file of the image.'),
         required=True)
 
     x = attr.Measurement(
@@ -929,6 +929,10 @@ class IDrawing(interfaces.IRMLDirectiveSignature):
         # Misc
         occurence.ZeroOrMore('bookmark', IBookmark),
         occurence.ZeroOrMore('plugInGraphic', IPlugInGraphic),
+        # Form Field Elements (boxed)
+        occurence.ZeroOrMore('checkBox', box.ICheckBox),
+        occurence.ZeroOrMore('letterBoxes', box.ILetterBoxes),
+        # occurence.ZeroOrMore('textBox', box.ITextBox),
         )
 
 class Drawing(directive.RMLDirective):
@@ -982,6 +986,10 @@ class Drawing(directive.RMLDirective):
         # Misc
         'bookmark': Bookmark,
         'plugInGraphic': PlugInGraphic,
+        # Form Field Elements (boxed)
+        'checkBox': box.CheckBox,
+        'letterBoxes': box.LetterBoxes,
+        # 'textBox': box.TextBox,
         }
 
 

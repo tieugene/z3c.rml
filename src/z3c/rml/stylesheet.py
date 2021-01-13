@@ -53,7 +53,7 @@ class ISpanStyle(interfaces.IRMLDirectiveSignature):
 
     parent = attr.Style(
         title='Parent',
-        description=('The apragraph style that will be used as a base for '
+        description=('The paragraph style that will be used as a base for '
                      'this one.'),
         required=False)
 
@@ -840,6 +840,102 @@ class ListStyle(directive.RMLDirective):
         manager = attr.getManager(self)
         manager.styles[style.name] = style
 
+class IBoxStyle(interfaces.IRMLDirectiveSignature):
+    """A style defining the look of a *Box elements."""
+
+    name = attr.Text(
+        title='Name',
+        description='The name of the style.',
+        required=True)
+
+    alias = attr.Text(
+        title='Alias',
+        description='An alias under which the style will also be known as.',
+        required=False)
+
+    parent = attr.Style(
+        title='Parent',
+        description='The box style that will be used as a base for this one.',
+        required=False)
+
+    fontName = attr.Text(           # !checkBox
+        title='Font Name',
+        description='The name of the font for the content.',
+        required=False)
+
+    fontSize = attr.Measurement(    # !checkBox
+        title='Font Size',
+        description='The font size for the text of the content.',
+        required=False)
+
+    alignment = attr.Choice(        # !checkBox
+        title='Alignment',
+        description='The alignment of the contents of the box.',
+        choices=interfaces.ALIGN_CHOICES,
+        required=False)
+
+    textColor = attr.Color(         # !checkBox
+        title='Text Color',
+        description='The color for the main contents in the letterboxes or textbox.',
+        required=False)
+
+    labelFontName = attr.Text(
+        title='Label Font Name',
+        description='The name of the font for the label.',
+        required=False)
+
+    labelFontSize = attr.Measurement(
+        title='Label Font Size',
+        description='The font size for the text of the label.',
+        required=False)
+
+    labelAlignment = attr.Choice(
+        title='Label Alignment',
+        description='The alignment of the label of the box.',
+        choices=interfaces.ALIGN_CHOICES,
+        required=False)
+
+    labelTextColor = attr.Color(
+        title='Label Text Color',
+        description='The color of the text of the label of an *Box elements.',
+        required=False)
+
+    boxFillColor = attr.Color(
+        title='Box Fill Color',
+        description='The color to be used for the background.',
+        required=False)
+
+    boxStrokeColor = attr.Color(
+        title='Box Strike Color',
+        description='The color to be used for the lines making up.',
+        required=False)
+
+    cellWidth = attr.Measurement(
+        title='Cell Width',
+        description='The width of a "cell" in a form element.',
+        required=False)
+
+    cellHeight = attr.Measurement(
+        title='Cell Height',
+        description='The height of a "cell" in a form element.',
+        required=False)
+
+class BoxStyle(directive.RMLDirective):
+    signature = IBoxStyle
+
+    def process(self):
+        kwargs = dict(self.getAttributeValues())
+        parent = kwargs.pop(
+            'parent', reportlab.lib.styles.PropertySet(name='Box'))
+        name = kwargs.pop('name')
+        style = copy.deepcopy(parent)
+        style.name = name[6:] if name.startswith('style.') else name
+
+        for name, value in kwargs.items():
+            setattr(style, name, value)
+
+        manager = attr.getManager(self)
+        manager.styles[style.name] = style
 
 class IStylesheet(interfaces.IRMLDirectiveSignature):
     """A styleheet defines the styles that can be used in the document."""
@@ -849,8 +945,7 @@ class IStylesheet(interfaces.IRMLDirectiveSignature):
         occurence.ZeroOrMore('paraStyle', IParagraphStyle),
         occurence.ZeroOrMore('blockTableStyle', IBlockTableStyle),
         occurence.ZeroOrMore('listStyle', IListStyle),
-        # TODO:
-        #occurence.ZeroOrMore('boxStyle', IBoxStyle),
+        occurence.ZeroOrMore('boxStyle', IBoxStyle),
         )
 
 class Stylesheet(directive.RMLDirective):
@@ -862,4 +957,5 @@ class Stylesheet(directive.RMLDirective):
         'paraStyle': ParagraphStyle,
         'blockTableStyle': BlockTableStyle,
         'listStyle': ListStyle,
+        'boxStyle': BoxStyle,
         }

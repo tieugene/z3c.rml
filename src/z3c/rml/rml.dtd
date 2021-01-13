@@ -92,7 +92,7 @@
 <!ATTLIST startIndex offset CDATA #IMPLIED>
 <!ATTLIST startIndex format (i | 123 | abc) #IMPLIED>
 
-<!ELEMENT stylesheet (initialize? | spanStyle* | paraStyle* | blockTableStyle* | listStyle*)>
+<!ELEMENT stylesheet (initialize? | spanStyle* | paraStyle* | blockTableStyle* | listStyle* | boxStyle*)>
 
 <!ELEMENT initialize (name* | alias* | color*)>
 
@@ -275,6 +275,25 @@
 <!ATTLIST listStyle name CDATA #REQUIRED>
 <!ATTLIST listStyle parent CDATA #IMPLIED>
 
+<!ELEMENT boxStyle EMPTY>
+<!ATTLIST boxStyle
+    name CDATA #REQUIRED
+    alias CDATA #IMPLIED
+    parent CDATA #IMPLIED
+    fontName CDATA #IMPLIED
+    fontSize CDATA #IMPLIED
+    alignment CDATA (left | right | center | centre) #IMPLIED
+    textColor CDATA #IMPLIED
+    labelFontName CDATA #IMPLIED
+    labelFontSize CDATA #IMPLIED
+    labelAlignment CDATA (left | right | center | centre) #IMPLIED
+    labelTextColor CDATA #IMPLIED
+    boxFillColor CDATA #IMPLIED
+    boxStrokeColor CDATA #IMPLIED
+    cellWidth CDATA #IMPLIE
+    cellHeight CDATA #IMPLIED
+>
+
 <!ELEMENT template (pageTemplate+)>
 <!ATTLIST template pagesize CDATA #IMPLIED>
 <!ATTLIST template rotation CDATA #IMPLIED>
@@ -304,7 +323,7 @@
 <!ATTLIST frame bottomPadding CDATA #IMPLIED>
 <!ATTLIST frame showBoundary CDATA #IMPLIED>
 
-<!ELEMENT pageGraphics (saveState* | restoreState* | drawString* | drawRightString* | drawCenteredString* | drawCentredString* | drawAlignedString* | ellipse* | circle* | rect* | grid* | lines* | curves* | image* | place* | textAnnotation* | path* | fill* | stroke* | setFont* | setFontSize* | scale* | translate* | rotate* | skew* | transform* | lineMode* | barCode* | textField* | buttonField* | selectField* | barChart* | barChart3D* | linePlot* | linePlot3D* | pieChart* | pieChart3D* | spiderChart* | bookmark* | plugInGraphic*)>
+<!ELEMENT pageGraphics (saveState* | restoreState* | drawString* | drawRightString* | drawCenteredString* | drawCentredString* | drawAlignedString* | ellipse* | circle* | rect* | grid* | lines* | curves* | image* | place* | textAnnotation* | path* | fill* | stroke* | setFont* | setFontSize* | scale* | translate* | rotate* | skew* | transform* | lineMode* | barCode* | letterBoxes* | textField* | buttonField* | selectField* | barChart* | barChart3D* | linePlot* | linePlot3D* | pieChart* | pieChart3D* | spiderChart* | bookmark* | plugInGraphic*)>
 
 <!ELEMENT saveState EMPTY>
 
@@ -473,6 +492,87 @@
 <!ATTLIST barCode x CDATA #IMPLIED>
 <!ATTLIST barCode y CDATA #IMPLIED>
 <!ATTLIST barCode isoScale CDATA #IMPLIED>
+
+<!ELEMENT checkBox (#PCDATA)*>
+<!ATTLIST checkBox
+    x CDATA #REQUIRED
+    y CDATA #REQUIRED
+    style CDATA #IMPLIED
+    bold CDATA #IMPLIED
+    boxFillColor CDATA #IMPLIED
+    boxStrokeColor CDATA #IMPLIED
+    boxHeight CDATA #IMPLIED
+    boxWidth CDATA #IMPLIED
+    checked CDATA #IMPLIED
+    checkStrokeColor CDATA #IMPLIED
+    graphicOff CDATA #IMPLIED
+    graphicOn CDATA #IMPLIED
+    label CDATA #IMPLIED
+    labelFontName CDATA #IMPLIED
+    labelFontSize CDATA #IMPLIED
+    labelTextColor CDATA #IMPLIED
+    labelOffsetX CDATA #IMPLIED
+    labelOffsetY CDATA #IMPLIED
+    lineWidth CDATA #IMPLIED
+    line1 CDATA #IMPLIED
+    line2 CDATA #IMPLIED
+    line3 CDATA #IMPLIED
+>
+
+<!ELEMENT letterBoxes (#PCDATA)*>
+<!ATTLIST letterBoxes
+    count CDATA #REQUIRED
+    x CDATA #REQUIRED
+    y CDATA #REQUIRED
+    style CDATA #IMPLIED
+    alignment CDATA (left | right | center | centre) #IMPLIED
+    boxFillColor CDATA #IMPLIED
+    boxStrokeColor CDATA #IMPLIED
+    boxGap CDATA #IMPLIED
+    boxExtraGaps CDATA #IMPLIED
+    boxHeight CDATA #IMPLIED
+    boxWidth CDATA #IMPLIED
+    combHeight CDATA #IMPLIED
+    fontName CDATA #IMPLIED
+    fontSize CDATA #IMPLIED
+    textColor CDATA #IMPLIED
+    label CDATA #IMPLIED
+    labelFontName CDATA #IMPLIED
+    labelFontSize CDATA #IMPLIED
+    labelTextColor CDATA #IMPLIED
+    labelOffsetX CDATA #IMPLIED
+    labelOffsetY CDATA #IMPLIED
+    lineWidth CDATA #IMPLIED
+    strokeBottom CDATA #IMPLIED
+    strokeLeft CDATA #IMPLIED
+    strokeRight CDATA #IMPLIED
+    strokeTop CDATA #IMPLIED
+>
+
+<!ELEMENT textBox (#PCDATA)*>
+<!ATTLIST textBox
+    x CDATA #REQUIRED
+    y CDATA #REQUIRED
+    boxHeight CDATA #REQUIRED
+    boxWidth CDATA #REQUIRED
+    style CDATA #IMPLIED
+    align CDATA (left | right | center | centre) #IMPLIED
+    boxFillColor CDATA #IMPLIED
+    boxStrokeColor CDATA #IMPLIED
+    fontName CDATA #IMPLIED
+    fontSize CDATA #IMPLIED
+    textColor CDATA #IMPLIED
+    label CDATA #IMPLIED
+    labelFontName CDATA #IMPLIED
+    labelFontSize CDATA #IMPLIED
+    labelTextColor CDATA #IMPLIED
+    labelOffsetX CDATA #IMPLIED
+    labelOffsetY CDATA #IMPLIED
+    lineWidth CDATA #IMPLIED
+    borderSpec CDATA #IMPLIED
+    shrinkToFit CDATA #IMPLIED
+    vAlign CDATA (top | middle | bottom) #IMPLIED
+>
 
 <!ELEMENT textField EMPTY>
 <!ATTLIST textField title CDATA #REQUIRED>
@@ -1936,4 +2036,4 @@
 <!ELEMENT pageInfo EMPTY>
 <!ATTLIST pageInfo pageSize CDATA #REQUIRED>
 
-<!ELEMENT pageDrawing (saveState* | restoreState* | drawString* | drawRightString* | drawCenteredString* | drawCentredString* | drawAlignedString* | ellipse* | circle* | rect* | grid* | lines* | curves* | image* | place* | textAnnotation* | path* | fill* | stroke* | setFont* | setFontSize* | scale* | translate* | rotate* | skew* | transform* | lineMode* | barCode* | textField* | buttonField* | selectField* | barChart* | barChart3D* | linePlot* | linePlot3D* | pieChart* | pieChart3D* | spiderChart* | bookmark* | plugInGraphic*)>
+<!ELEMENT pageDrawing (saveState* | restoreState* | drawString* | drawRightString* | drawCenteredString* | drawCentredString* | drawAlignedString* | ellipse* | circle* | rect* | grid* | lines* | curves* | image* | place* | textAnnotation* | path* | fill* | stroke* | setFont* | setFontSize* | scale* | translate* | rotate* | skew* | transform* | lineMode* | barCode* | letterBoxes* | textField* | buttonField* | selectField* | barChart* | barChart3D* | linePlot* | linePlot3D* | pieChart* | pieChart3D* | spiderChart* | bookmark* | plugInGraphic*)>
