@@ -2,10 +2,16 @@
 CHANGES
 =======
 
-4.1.3 (unreleased)
+4.2.1 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+4.2.0 (2021-10-14)
+------------------
+
+- Upgrade to using `pikepdf` 3.0+.
 
 
 4.1.2 (2020-12-14)
